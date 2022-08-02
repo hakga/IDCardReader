@@ -76,7 +76,7 @@ namespace IDCardReader {
             this.listBox1.ItemHeight = 21;
             this.listBox1.Location = new System.Drawing.Point(33, 253);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(315, 25);
+            this.listBox1.Size = new System.Drawing.Size(315, 46);
             this.listBox1.TabIndex = 4;
             // 
             // Form1

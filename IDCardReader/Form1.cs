@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using PCSC;
+﻿using PCSC;
 using PCSC.Iso7816;
+using System;
+using System.Windows.Forms;
 
 namespace IDCardReader {
     public partial class Form1 : Form {
-        public CardRecord CardRecord;
+        public CardData CardRecord;
         public Form1() {
             InitializeComponent();
-            CardRecord = new CardRecord();
+            CardRecord = new CardData();
         }
 
         private void Form1_Load(object sender, EventArgs events) {
@@ -39,7 +32,7 @@ namespace IDCardReader {
         private void button1_Click(object sender, EventArgs events) {
             ReaderStatus readerStatus;
             string error;
-            var newRecord = new CardFields();
+            var newRecord = new CardRecord();
             var contextFactory = ContextFactory.Instance;
             try {
                 using (var context = contextFactory.Establish(SCardScope.System)) {
@@ -63,8 +56,7 @@ namespace IDCardReader {
                                 receiveBuffer.Length); // data buffer
                             var responseGetData = new ResponseApdu(receiveBuffer, bytesReceived, IsoCase.Case2Short, rfidReader.Protocol);
                             if (responseGetData.HasData) {
-                                var uid = BitConverter.ToString(responseGetData.GetData());
-                                newRecord.uid = uid;
+                                newRecord.uid = BitConverter.ToString(responseGetData.GetData());
                             } else {
                                 throw new ApplicationException("cannot read uid");
                             }
