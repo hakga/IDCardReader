@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Linq;
 
 namespace IDCardReader {
     public class CardData {
@@ -13,8 +14,12 @@ namespace IDCardReader {
             return _dt;
         }
         public void Add(CardRecord record) {
-//         dt.Rows.Add(record.uid, record.pid);
-            _dt.Rows.Add(record.properties());
+            if ( _dt.AsEnumerable().Any(r => r.Field<string>(0) == record.properties()[0].ToString()) == false) {
+                _dt.Rows.Add(record.properties());
+            }
+        }
+        public void UpdateDB() {
+            throw new System.NotImplementedException();
         }
     }
 }
